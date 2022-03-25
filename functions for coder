@@ -1,0 +1,30 @@
+import re
+
+
+def text_to_bits(input_txt, encoding='utf-8', errors='surrogatepass'):
+    bits = bin(int.from_bytes(input_txt.encode(encoding, errors), 'big'))[2:]
+    return bits.zfill(8 * ((len(bits) + 7) // 8))
+
+def text_from_bits(bits, encoding='utf-8', errors='surrogatepass'):
+    n = int(bits, 2)
+    return n.to_bytes((n.bit_length() + 7) // 8, 'big').decode(encoding, errors) or '\0'
+
+def testing_expression_summators(expression):
+    symbols = "!@#$%^&*()_+=/><.,'№;:?"
+    regexp = r"([a-zA-Z])"
+    match = re.search(regexp, expression)
+    if (match is None) and (symbols not in expression):
+        return True
+    else:
+        return False
+
+def testing_expression_positions(expression):
+    symbols = "!@#$%^&*()_+=/><.,'№;:?"
+    regexp = r"([a-zA-Z])"
+    regexp1 = "4567890"
+    match = re.search(regexp, expression)
+    match1 = re.search(regexp1, expression)
+    if (match is None) and (match1 is None) and (symbols not in expression):
+        return True
+    else:
+        return False
